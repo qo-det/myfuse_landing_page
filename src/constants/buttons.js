@@ -1,23 +1,14 @@
 export const buttonData = {
-  hero: [],
-  faqSection: [],
-  sliderAnimation: [],
-  animationSection: [],
-  carouselAlgo: [],
-  companiesWorking: [],
-  customerJourney: [],
-  desktopFooterSection: [],
-  featureSection: [],
-  footer: [],
-  footerSection: [],
-  getJobs: [],
-  getStartedSection: [],
-  heroSection: [],
-  mobileFooterSection: [],
-  navbar: [],
-  responsiveAnimationSection: [],
-  resumeCarousel: [],
-  tempelatePage: [],
-  testimonialSection: [],
-  verticalAnimationSection: [],
+  // ...
+  navbar: [
+    {
+      title: "TRY RESUME BUILDER",
+      variant: "filled",
+      onClick: () => {
+        /* your action here */
+      },
+      className: "",
+    },
+  ],
+  // ...
 };

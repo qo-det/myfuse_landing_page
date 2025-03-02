@@ -2,20 +2,20 @@ module.exports = {
   env: {
     es6: true,
     jest: true,
-    browser: true
+    browser: true,
   },
   extends: ["airbnb"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
-    __DEV__: true
+    __DEV__: true,
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["react", "jsx-a11y", "import", "import-helpers", "react-hooks"],
   rules: {
@@ -33,16 +33,15 @@ module.exports = {
     "no-console": "off",
     "react/jsx-props-no-spreading": "off",
     "import-helpers/order-imports": [
-      "warn",
+      "off",
       {
         newlinesBetween: "always",
-        groups: [
-          "module",
-          "/^~/",
-          ["parent", "sibling", "index"],
-        ],
-        alphabetize: { order: "asc", ignoreCase: true }
-      }
+        groups: ["module", "/^~/", ["parent", "sibling", "index"]],
+        alphabetize: { order: "asc", ignoreCase: true },
+      },
     ],
+    quotes: "off",
+    "react/react-in-jsx-scope": "off",
+    "eol-last": "off",
   },
 };
