@@ -53,7 +53,7 @@ export default function FAQSection() {
               <button
                 onClick={() => toggleFAQ(index)}
                 className={styles.faqToggle}
-                style={{ border: "none" }}
+                style={{ backgroundColor: "transparent", border: "none" }}
               >
                 <span>{faq.question}</span>
                 <span>
@@ -69,6 +69,7 @@ export default function FAQSection() {
               <AnimatePresence>
                 {isOpen && (
                   <motion.div
+                    layout
                     key="content"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
@@ -85,9 +86,7 @@ export default function FAQSection() {
         })}
 
         {/* Get in Touch Button - Mobile Only */}
-        <button className={styles.getInTouchMobile} style={{ border: "none" }}>
-          get in touch
-        </button>
+        <button className={styles.getInTouchMobile}>get in touch</button>
       </div>
 
       {/* Left Column: Heading, Subheading */}

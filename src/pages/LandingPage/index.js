@@ -11,6 +11,8 @@ import CommentSection from "../../components/CommentSection/CommentSection";
 import FindJobs from "../../components/FindJobs/FindJobs";
 import CustomerJourney from "../../components/CustomerJoueney/CustomerJourney";
 import FAQSection from "../../components/FAQSection/FAQSection";
+import GetStartedSection from "../../components/GetStartedSection/GetStartedSection";
+import FooterSection from "../../components/FooterSection/FooterSection";
 
 export default function LandingPage() {
   return (
@@ -25,6 +27,8 @@ export default function LandingPage() {
       <FindJobs />
       <CustomerJourney />
       <FAQSection />
+      <GetStartedSection />
+      <FooterSection />
     </div>
   );
 }

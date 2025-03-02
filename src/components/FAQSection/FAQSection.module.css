@@ -145,10 +145,7 @@
     display: block;
     background-color: #4d4dff;
     border-radius: 9999px;
-    padding-left: 32px; /* px-10 */
-    padding-right: 32px;
-    padding-top: 16px; /* py-2 */
-    padding-bottom: 16px;
+    padding: 16px 32px;
     text-transform: uppercase;
     font-family: "Figtree", sans-serif;
     font-weight: 600;
