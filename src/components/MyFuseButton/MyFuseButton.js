@@ -65,6 +65,7 @@ const MyFuseButton = forwardRef(
         whileHover="hover"
         animate="rest"
         variants={variants}
+        style={variant === "filled" ? { border: "none" } : {}}
       >
         {title}
       </motion.button>

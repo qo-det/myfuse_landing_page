@@ -204,7 +204,3 @@
 .desktopButton:hover {
   background-color: #3b3bff; /* approximated hover:bg-myFuseDeepBlue */
 }
-
-.desktopSpacer {
-  margin-top: 70px;
-}
