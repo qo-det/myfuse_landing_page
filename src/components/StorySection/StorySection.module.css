@@ -38,6 +38,7 @@
   font-size: 2.25rem; /* text-4xl */
   width: 80%;
   color: #0f0f0f;
+  line-height: 105%;
 }
 @media (min-width: 768px) {
   .headingText {
@@ -103,6 +104,10 @@
   justify-content: center;
   align-items: center;
   padding: 1rem;
+}
+.arrowButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Rotate image 180 degrees */
