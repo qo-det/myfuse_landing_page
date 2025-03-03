@@ -88,7 +88,10 @@ export default function CustomerJourney() {
       </div>
 
       {/* Start Now Button */}
-      <button className={styles.startButton} style={{ border: "none" }}>
+      <button
+        className={styles.startButton}
+        style={{ border: "none", paddingTop: "16px", paddingBottom: "16px" }}
+      >
         Start Now
       </button>
     </div>

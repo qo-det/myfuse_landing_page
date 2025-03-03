@@ -86,7 +86,12 @@ export default function FAQSection() {
         })}
 
         {/* Get in Touch Button - Mobile Only */}
-        <button className={styles.getInTouchMobile}>get in touch</button>
+        <button
+          className={styles.getInTouchMobile}
+          style={{ border: "none", paddingTop: "16px", paddingBottom: "16px" }}
+        >
+          get in touch
+        </button>
       </div>
 
       {/* Left Column: Heading, Subheading */}

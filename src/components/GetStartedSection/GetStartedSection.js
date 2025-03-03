@@ -35,7 +35,11 @@ export default function GetStartedSection() {
           </div>
           <button
             className={styles.getStartedButton}
-            style={{ border: "none" }}
+            style={{
+              border: "none",
+              paddingTop: "16px",
+              paddingBottom: "16px",
+            }}
           >
             craft your resume
           </button>
