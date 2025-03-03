@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, PanInfo } from "framer-motion";
+import { motion } from "framer-motion";
 import { imageLinks } from "../../constants/featureImages";
 import styles from "./StorySection.module.css";
 
@@ -31,32 +31,48 @@ function StorySection() {
   // Current slide index
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Slide width in pixels (desktop vs. mobile)
-  const slidePx = isMobile ? 400 : 800;
-  const gap = 24; // fixed gap in px
+  // Define separate slide widths and gaps for mobile and desktop
+  const mobileSlidePx = 400;
+  const desktopSlidePx = 800;
+  const mobileGap = 24;
+  const desktopGap = 24;
 
-  // Reference to carousel container
+  // Choose slidePx and gap based on isMobile flag
+  const slidePx = isMobile ? mobileSlidePx : desktopSlidePx;
+  const gap = isMobile ? mobileGap : desktopGap;
+
+  // Reference to carousel container and measure its width
   const carouselRef = useRef(null);
-  // Track the calculated slide width
-  const [slideWidth, setSlideWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-  // Measure the container width on mount and on window resize
   useEffect(() => {
-    function updateSlideWidth() {
+    function updateContainerWidth() {
       if (carouselRef.current) {
-        setSlideWidth(carouselRef.current.offsetWidth);
+        setContainerWidth(carouselRef.current.offsetWidth);
       }
     }
-    updateSlideWidth();
-    window.addEventListener("resize", updateSlideWidth);
-    return () => window.removeEventListener("resize", updateSlideWidth);
+    updateContainerWidth();
+    window.addEventListener("resize", updateContainerWidth);
+    return () => window.removeEventListener("resize", updateContainerWidth);
   }, []);
 
-  // Compute the offset for the currentIndex
+  // Effective width accounts for the horizontal padding (16px on each side => 32px total)
+  const effectiveWidth = containerWidth - 32;
 
-  // Calculate offset consistently (remove the special-case for index 7)
-  // If px-4 is ~16px, do:
-  const computedOffset = 2150 - currentIndex * (slidePx + gap);
+  // Calculate separate offsets for mobile and desktop.
+  const mobileOffset =
+    effectiveWidth > 0
+      ? (effectiveWidth - mobileSlidePx) / 2 -
+        currentIndex * (mobileSlidePx + mobileGap)
+      : 0;
+  const desktopOffset =
+    effectiveWidth > 0
+      ? (effectiveWidth - desktopSlidePx) * 0.434 -
+        currentIndex * (desktopSlidePx + desktopGap)
+      : 0;
+
+  // Use the appropriate offset based on screen size.
+  const computedOffset = isMobile ? mobileOffset : desktopOffset;
 
   // Arrow handlers
   const handleNext = () => {
@@ -104,8 +120,8 @@ function StorySection() {
           <span className={styles.myFuseBlue}>Algorithm Work</span>
         </div>
 
-        {/* Carousel Container with added padding (px-4) */}
-        <div className={`${styles.carouselContainer}`} ref={carouselRef}>
+        {/* Carousel Container */}
+        <div className={styles.carouselContainer} ref={carouselRef}>
           <motion.div
             className={styles.carouselInner}
             animate={{ x: computedOffset }}
