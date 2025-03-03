@@ -25,35 +25,40 @@ function StorySection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Normal carousel: use the original images array (no cloning)
+  // Carousel images array
   const images = activeImages;
 
-  // Track the current slide index (0-based)
+  // Current slide index
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Define slide width as 80% (for reference, not directly used)
-  const slideWidth = 80; // percent
-
-  // Reference to the carousel container (to measure its width)
-  const carouselRef = useRef(null);
-  const [containerWidth, setContainerWidth] = useState(0);
-  useEffect(() => {
-    if (carouselRef.current) {
-      setContainerWidth(carouselRef.current.clientWidth);
-    }
-  }, [carouselRef.current, isMobile, activeImages]);
-
-  // Fixed gap between slides (24px)
-  const gap = 24; // px
-
-  // Compute each slide's width in pixels.
+  // Slide width in pixels (desktop vs. mobile)
   const slidePx = isMobile ? 400 : 800;
+  const gap = 24; // fixed gap in px
 
-  // Compute the offset (we use inline animation instead)
-  const computedOffset =
-    currentIndex !== 7 ? -currentIndex * (slidePx + gap) : -currentIndex * gap;
+  // Reference to carousel container
+  const carouselRef = useRef(null);
+  // Track the calculated slide width
+  const [slideWidth, setSlideWidth] = useState(0);
 
-  // Arrow handlers (clamped to first and last slide)
+  // Measure the container width on mount and on window resize
+  useEffect(() => {
+    function updateSlideWidth() {
+      if (carouselRef.current) {
+        setSlideWidth(carouselRef.current.offsetWidth);
+      }
+    }
+    updateSlideWidth();
+    window.addEventListener("resize", updateSlideWidth);
+    return () => window.removeEventListener("resize", updateSlideWidth);
+  }, []);
+
+  // Compute the offset for the currentIndex
+
+  // Calculate offset consistently (remove the special-case for index 7)
+  // If px-4 is ~16px, do:
+  const computedOffset = 2150 - currentIndex * (slidePx + gap);
+
+  // Arrow handlers
   const handleNext = () => {
     setCurrentIndex((prev) => Math.min(prev + 1, images.length - 1));
   };
@@ -61,7 +66,7 @@ function StorySection() {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  // Drag handler for mobile: if the user drags more than half a slide, update the index.
+  // Drag handler for mobile: update index if dragged more than half a slide
   const handleDragEnd = (event, info) => {
     if (!carouselRef.current) return;
     if (info.offset.x < -slidePx / 2) {
@@ -71,9 +76,8 @@ function StorySection() {
     }
   };
 
-  // -------------------------------
   // Dot pagination logic (mobile only)
-  const windowSize = 5;
+  const windowSize = 7;
   const totalDots = images.length;
   let startDot = 0;
   if (totalDots > windowSize) {
@@ -83,7 +87,6 @@ function StorySection() {
   }
   const visibleDots = images.slice(startDot, startDot + windowSize);
   const activeDotInWindow = currentIndex - startDot;
-  // -------------------------------
 
   return (
     <div
@@ -101,19 +104,15 @@ function StorySection() {
           <span className={styles.myFuseBlue}>Algorithm Work</span>
         </div>
 
-        {/* Carousel Container */}
-        <div className={styles.carouselContainer} ref={carouselRef}>
+        {/* Carousel Container with added padding (px-4) */}
+        <div className={`${styles.carouselContainer}`} ref={carouselRef}>
           <motion.div
             className={styles.carouselInner}
-            animate={{
-              x:
-                currentIndex !== 7
-                  ? -currentIndex * (slidePx + gap)
-                  : -currentIndex * gap,
-            }}
+            animate={{ x: computedOffset }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
             drag={isMobile ? "x" : false}
             onDragEnd={isMobile ? handleDragEnd : undefined}
+            style={{ display: "flex", gap: `${gap}px` }}
           >
             {images.map((link, index) => (
               <div key={index} className={styles.slideWrapper}>
@@ -133,7 +132,7 @@ function StorySection() {
           </motion.div>
         </div>
 
-        {/* Arrow Buttons (visible only on desktop) */}
+        {/* Arrow Buttons (desktop only) */}
         {!isMobile && (
           <div className={styles.arrowButtonsContainer}>
             <button
@@ -166,7 +165,7 @@ function StorySection() {
           </div>
         )}
 
-        {/* Pagination Dots (visible only on mobile) */}
+        {/* Dot Pagination (mobile only) */}
         {isMobile && (
           <div className={styles.paginationDots}>
             {visibleDots.map((_, i) => (

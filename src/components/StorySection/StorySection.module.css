@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  background-position: center; /* Add this line */
   background-size: contain;
   background-repeat: no-repeat;
   padding: 4rem 0; /* Equivalent to py-16 */
@@ -55,7 +56,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 0 1rem; /* px-4 */
+  padding: 0 16px; /* px-4 */
 }
 
 /* Carousel inner container */
